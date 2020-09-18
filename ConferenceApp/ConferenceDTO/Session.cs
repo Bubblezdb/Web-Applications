@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace ConferenceDTO
+{
+    public class Session
+    {
+
+        [Key]//identifying the ID as Key
+        public int Id { get; set; }
+
+
+        [Required]
+        [StringLength(200)]
+        public string Title { get; set; }
+
+
+        [StringLength(4000)]
+        public virtual string Abstract { get; set; }
+
+        public virtual DateTimeOffset? StartTime { get; set; }
+
+        public virtual DateTimeOffset? EndTime { get; set; }
+
+        public TimeSpan Duration => EndTime?.Subtract(StartTime ?? EndTime ?? DateTimeOffset.MinValue) ?? TimeSpan.Zero;
+
+        public int? TrackId { get; set; }
+
+
+    }
+}
