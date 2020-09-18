@@ -1,4 +1,4 @@
 # Web-Applications
-![image](https://user-images.githubusercontent.com/68390087/93617283-c6e36c00-f9a3-11ea-8495-3e8ba21113cc.png)
+![image](https://user-images.githubusercontent.com/68390087/93617641-3b1e0f80-f9a4-11ea-943d-564121152aa3.png)
 <br />
 A library of different web applications built using .NET Core
