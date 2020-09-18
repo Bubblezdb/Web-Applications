@@ -4,6 +4,6 @@ This project is broken down into three mini projects:
 <br/>
 1. Building a Backend to manage backend services such as a SQL database and API services : https://youtu.be/jFghj_l9-CY
 <br/>
-2. Buidling a project to manage a collection of Data Transfer Objects (DTO) that will be shared from the backend microservices to the frontend web application. : https://youtu.be/bpwxXo8GBrg
+2. Buidling a Class Library to manage a collection of Data Transfer Objects (DTO) that will be shared from the backend microservices to the frontend web application. : https://youtu.be/bpwxXo8GBrg
 <br/>
 3. Building a Frontend project to manage razor page views and user input.  : https://youtu.be/xMFg0lC4XBg
