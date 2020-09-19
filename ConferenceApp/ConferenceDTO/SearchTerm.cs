@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ConferenceDTO
 {
-    class TrackResponse
+    public class SearchTerm
     {
+        public string Query { get; set; }
     }
 }

@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
 using System.IO;
 
+
 namespace BackEnd
 {
     public class Startup
@@ -50,7 +51,13 @@ namespace BackEnd
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                                options.IncludeXmlComments(xmlPath);
             
+
         });
+            //This adds an instance of HttpClientFactory with its base URL pulled
+            //from the application configuration, which will point to our BackEnd API application
+            
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
