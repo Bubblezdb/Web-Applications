@@ -17,5 +17,7 @@ namespace FrontEnd.Services
         Task<AttendeeResponse> GetAttendeeAsync(string name);
         Task DeleteSessionAsync(int id);
         Task<List<SearchResult>> SearchAsync(string query);
+
+        Task<bool> CheckHealthAsync();
     }
 }

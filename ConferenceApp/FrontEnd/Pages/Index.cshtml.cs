@@ -7,6 +7,7 @@ using FrontEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace FrontEnd.Pages
 {
@@ -21,13 +22,20 @@ namespace FrontEnd.Pages
             _apiClient = apiClient;
             _logger = logger;
         }
+        [TempData]
+        public string Message { get; set; }
+
+        public bool ShowMessage => !string.IsNullOrEmpty(Message);
         public IEnumerable<IGrouping<DateTimeOffset?, SessionResponse>> Sessions { get; set; }
 
         public IEnumerable<(int Offset, DayOfWeek? DayofWeek)> DayOffsets { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         public int CurrentDayOffset { get; set; }
         public async Task OnGet(int day = 0) //query for html page
         {
+            IsAdmin = User.IsAdmin();
             CurrentDayOffset = day;
 
             var sessions = await _apiClient.GetSessionsAsync();

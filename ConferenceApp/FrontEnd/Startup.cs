@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FrontEnd.Areas.Identity;
+using FrontEnd.Data;
+using FrontEnd.HealthChecks;
 
 namespace FrontEnd
 {
@@ -24,11 +27,30 @@ namespace FrontEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages(options =>
+            {
+                //This is a constraint to keep normal users out of admin pages.
+                options.Conventions.AuthorizeFolder("/Admin", "Admin");
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy =>
+                {
+                    policy.RequireAuthenticatedUser()
+                          .RequireIsAdminClaim();
+                });
+            });
+            services.AddHealthChecks()
+                         .AddCheck<BackendHealthCheck>("backend")
+                        .AddDbContextCheck<IdentityDbContext>();
+
             services.AddHttpClient<IApiClient, ApiClient>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["serviceUrl"]);
             });
+            services.AddSingleton<IAdminService, AdminService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,12 +71,13 @@ namespace FrontEnd
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseAuthentication();//Who are you?
+            app.UseAuthorization();//Are you allowed to do this?
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }

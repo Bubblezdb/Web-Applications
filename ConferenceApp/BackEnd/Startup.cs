@@ -40,6 +40,8 @@ namespace BackEnd
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
 
+            services.AddHealthChecks()
+                    .AddDbContextCheck<ApplicationDbContext>();
 
             services.AddControllers();
 
@@ -90,6 +92,7 @@ namespace BackEnd
                     return Task.CompletedTask;
                 });
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
