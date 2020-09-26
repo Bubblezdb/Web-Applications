@@ -1,0 +1,24 @@
+﻿@*Only _Layout needs the include DOCTYPE html. This view will be inserted where the
+    @RenderBody div tag is.
+
+     @model expression at the top of the file specifies that the view expects to receive a
+    sequence of Product objects from the action method as its model data.
+    @foreach expression to work through the sequence and generate a simple set of HTML
+    elements for each Product object that is received.
+    add pagination to the view displays a smaller number of products. add it to the controller.
+*@
+
+
+@model ProductsListViewModel
+
+@foreach (var p in Model.Products)
+{
+<partial name="ProductSummary" model="p" />}
+
+<div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" page-url-category="@Model.CurrentCategory"
+     class="btn-group pull-right m-1">
+</div>
+
+@*The HTML taghelper*@
