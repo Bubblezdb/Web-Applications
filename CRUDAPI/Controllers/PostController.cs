@@ -79,25 +79,21 @@ namespace CRUDAPI.Controllers
         public async Task<IActionResult> AddPost([FromBody] Post model)
         {
             if (ModelState.IsValid)
-            { 
-                try 
-                { 
-                    var postId = await postRepository.AddPost(model);
-                    if (postId > 0)
-                    { 
-                        return Ok(postId); 
-                    } 
-                    else 
-                    {
-                        return NotFound(); 
-                    } 
-                } 
-                catch (Exception) 
+            {
+                try
                 {
+                    await postRepository.UpdatePost(model); return Ok();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().FullName == "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
                     return BadRequest();
-                } 
-            } 
-            return BadRequest(); 
+                }
+            }
+            return BadRequest();
         }
         [HttpDelete]
         [Route("DeletePost")]

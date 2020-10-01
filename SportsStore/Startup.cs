@@ -60,7 +60,9 @@ namespace SportsStore
             //used to satisfy related requests for Cart instances
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        }  /* AddSingleton method,  specifies that the same object should always be used.*/
+            /* AddSingleton method,  specifies that the same object should always be used.*/
+            services.AddServerSideBlazor();//creates the services that Blazor uses
+        }  
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -90,6 +92,9 @@ namespace SportsStore
                 new { Controller = "Home", action = "Index", productPage = 1 });
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();//registers the Blazor middleware components
+
+                endpoints.MapFallbackToPage("/Admin/{*catchall}", "/Admin/Index");//calls adminpage for admins. 
             });
             SeedData.EnsurePopulated(app);
         }

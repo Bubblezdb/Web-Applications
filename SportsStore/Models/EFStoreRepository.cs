@@ -18,5 +18,19 @@ namespace SportsStore.Models
          * which implements the IQueryable<T> interface and makes it easy to
          * implement the repository interface when using Entity Framework Core
          */
+        public void CreateProduct(Product p)
+        {
+            context.Add(p);
+            context.SaveChanges();
+        }
+        public void DeleteProduct(Product p)
+        {
+            context.Remove(p);
+            context.SaveChanges();
+        }
+        public void SaveProduct(Product p)
+        {
+            context.SaveChanges();
+        }
     }
 }

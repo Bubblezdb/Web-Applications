@@ -20,5 +20,9 @@ namespace SportsStore.Models
          * 
          * Add the scoped service to the Start.cs
          */
+
+        void SaveProduct(Product p);
+        void CreateProduct(Product p);
+        void DeleteProduct(Product p);
     }
 }
