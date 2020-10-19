@@ -13,7 +13,8 @@ using Microsoft.Extensions.Configuration;
 */
 using Microsoft.EntityFrameworkCore;
 using SportsStore.Models;
-
+using Microsoft.AspNetCore.Identity;
+using SportsStore.Data;
 
 namespace SportsStore
 {
@@ -62,6 +63,13 @@ namespace SportsStore
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             /* AddSingleton method,  specifies that the same object should always be used.*/
             services.AddServerSideBlazor();//creates the services that Blazor uses
+
+            services.AddDbContext<UserDbContext>(options=>
+            options.UseSqlServer(
+                Configuration["ConnectionString:UserDbContextConnection"]));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<UserDbContext>();
         }  
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +86,8 @@ namespace SportsStore
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("catpage",
